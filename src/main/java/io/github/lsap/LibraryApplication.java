@@ -22,6 +22,12 @@ class LibraryApplication {
                
                 [1] Show all books in the library
                 [2] Show all readers in the library
+                [3] Register new reader
+                [4] Add new book
+                [5] Lend a book to a reader
+                [6] Return a book
+                [7] Show all user's books
+                [8] Show current reader of a book with id
                
                Type "exit" to stop the program!
                """;
