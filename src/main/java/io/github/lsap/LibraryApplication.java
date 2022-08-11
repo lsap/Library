@@ -1,24 +1,24 @@
 package io.github.lsap;
 
-import java.util.List;
+import io.github.lsap.domain.model.OrderItem;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-class LibraryApplication {
+record LibraryApplication() {
 
     static String header() {
-        """
-                Welcome to the Library!
-                        
-                """
+        return """
+               Welcome to the Library!
+               """;
     }
 
     static String disclaimer() {
         return """
                
-               Please select the action by typing an option number
-               and pressing Enter key:
+               Please select the action by typing an option number and pressing Enter key:
                
                 [1] Show all books in the library
                 [2] Show all readers in the library
@@ -33,28 +33,45 @@ class LibraryApplication {
                """;
     }
 
+    static String newReader() {
+        return "Please enter new reader's name!";
+    }
+
+    static String newBook() {
+        return "Please enter new book title and book's author separated by /";
+    }
+
     public static void main(String[] args) {
         System.out.println(header());
-        var books = List.of(
-                Map.of("id", "0","title", "Anthem", "author", "Ayn Rand"),
-                Map.of("id", "1", "title", "Atlas shrugged", "author", "Alisa Rosenbaum"),
-                Map.of("id", "2", "title", "Spacepilot", "author", "Stanislav Lem")
-        );
-        var readers = List.of(
-                Map.of("id", "0", "name", "John"),
-                Map.of("id", "1", "name", "Jane"),
-                Map.of("id", "2", "name", "Ijon"));
+        System.out.println(disclaimer());
+        var books = new ArrayList<Map<String, String>>();
+        var readers = new ArrayList<Map<String, String>>();
+        var readerId = 0;
+        var bookId = 0;
         try (var scanner = new Scanner(System.in)) {
             var input = "";
             while (!"exit".equals(input)) {
-                System.out.println(disclaimer());
                 input = scanner.nextLine();
                 switch (input) {
                     case "1"    -> System.out.println(books);
                     case "2"    -> System.out.println(readers);
+                    case "3"    -> {
+                        System.out.println(newReader());
+                        input = scanner.nextLine();
+                        readers.add(Map.of("id", readerId++ + "", "name", input));
+                    }
+                    case "4"    -> {
+                        System.out.println(newBook());
+                        input = scanner.nextLine();
+
+                        books.add(Map.of(
+                                "id", bookId++ + "", "title", input.split("/")[0]));
+                    }
+                    case "5" -> System.out.println("");
                     case "exit" -> System.out.println("Bye!");
                     default     -> {}
                 }
+                System.out.println(disclaimer());
             }
         } catch (NoSuchElementException e) {
             e.printStackTrace();

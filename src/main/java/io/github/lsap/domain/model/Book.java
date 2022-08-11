@@ -1,4 +1,4 @@
-package io.github.lsap;
+package io.github.lsap.domain.model;
 
 class Book {
 
