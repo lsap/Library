@@ -29,7 +29,7 @@ record LibraryApplication() {
                 [7] Show all user's books
                 [8] Show current reader of a book with id
                
-               Type "exit" to stop the program!
+               Type "exit" to stop program!
                """;
     }
 
