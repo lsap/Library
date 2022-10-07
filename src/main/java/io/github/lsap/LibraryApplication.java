@@ -26,7 +26,7 @@ class LibraryApplication {
                 case "2"    -> showAllReaders();
                 case "3"    -> addNewReader();
                 case "4"    -> addNewBook();
-                case "5"    -> lendBook();
+                case "5"    -> lendBookToReader();
                 case "6"    -> returnBook();
                 case "7"    -> showAllReaderBooks();
                 case "8"    -> showReaderOfBook();
@@ -65,15 +65,15 @@ class LibraryApplication {
         Storage.addBook(book);
     }
 
-    static void lendBook() {
+    static void lendBookToReader() {
         System.out.println("Please enter bookID and reader's ID separated by “/”. E.g. d/f");
         var input = scanner.nextLine();
         var splittedInput = input.split("/");
         var bookId = Long.parseLong(splittedInput[0]);
         var readerId = Long.parseLong(splittedInput[1]);
         try {
-            bookLent(bookId, readerId);
-        } catch (NoEntityWithSuchIdException e) {
+            bookLentToReader(bookId, readerId);
+        } catch (NoEntityWithSuchIdException | NumberFormatException e) {
             System.err.println(e.getLocalizedMessage());;
         }
     }
@@ -84,7 +84,7 @@ class LibraryApplication {
         var bookId = Long.parseLong(input);
         try {
             returnBook(bookId);
-        } catch (NoEntityWithSuchIdException e) {
+        } catch (NoEntityWithSuchIdException | NumberFormatException e) {
             System.err.println(e.getLocalizedMessage());;
         }
     }
@@ -146,9 +146,7 @@ class LibraryApplication {
             throw new NoEntityWithSuchIdException(
                     "Reader with a specified id " + readerId + " does not exist in the storage");
         }
-        return Storage.getBooksIdsByReaderId(readerId)
-                .stream()
-                .toList();
+        return Storage.getBooksIdsByReaderId(readerId);
     }
 
     static String header() {
@@ -175,7 +173,7 @@ class LibraryApplication {
                """;
     }
 
-    private static void bookLent(Long bookId, Long readerId) {
+    private static void bookLentToReader(Long bookId, Long readerId) {
         if(!Storage.containsReaderWithId(readerId)) {
             throw new NoEntityWithSuchIdException(
                     "Reader with a specified id " + readerId + " does not exist in the storage");
