@@ -4,6 +4,7 @@ import io.github.lsap.exception.NoEntityWithSuchIdException;
 import io.github.lsap.persistence.Book;
 import io.github.lsap.persistence.Reader;
 import io.github.lsap.repository.Storage;
+import io.github.lsap.service.LibraryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ class LibraryApplication {
     static void addNewReader() {
         System.out.println("Please enter new reader's full name!");
         var readerName = scanner.nextLine();
-        Reader reader = new Reader();
+        var reader = new Reader();
         reader.setName(readerName);
         Storage.addReader(reader);
     }
