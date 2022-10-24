@@ -25,48 +25,61 @@ public class LibraryService {
         var readerName = scanner.nextLine();
         var reader = new Reader();
         reader.setName(readerName);
-        Storage.addReader(reader);
+        var id = Storage.addReader(reader);
+        System.out.println("Book with id " + id + " was added");
     }
 
     public void addNewBook() {
         System.out.println(
                 "Please enter new book's title and author separated by “/”. E.g. name/author");
         var bookInput = scanner.nextLine();
-        var splittedInput = bookInput.split("/");
-        var book = new Book();
-        book.setTitle(splittedInput[0]);
-        book.setAuthor(splittedInput[1]);
-        Storage.addBook(book);
+        if (bookInput.contains("/")) {
+            var splittedInput = bookInput.split("/");
+            var book = new Book();
+            try {
+                book.setTitle(splittedInput[0]);
+                book.setAuthor(splittedInput[1]);
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                System.err.println(e.getLocalizedMessage());
+            }
+            var id = Storage.addBook(book);
+            System.out.println("User with id " + id + " was added");
+        } else {
+            System.out.println("Please use '/' for separation");
+        }
     }
 
     public void lendBookToReader() {
         System.out.println("Please enter bookID and reader's ID separated by “/”. E.g. d/f");
         var input = scanner.nextLine();
-        var splittedInput = input.split("/");
-        var bookId = Long.parseLong(splittedInput[0]);
-        var readerId = Long.parseLong(splittedInput[1]);
-        try {
-            bookLentToReader(bookId, readerId);
-        } catch (NoEntityWithSuchIdException | NumberFormatException e) {
-            System.err.println(e.getLocalizedMessage());;
+        if (input.contains("/")) {
+            var splittedInput = input.split("/");
+            var bookId = Long.parseLong(splittedInput[0]);
+            var readerId = Long.parseLong(splittedInput[1]);
+            try {
+                bookLentToReader(bookId, readerId);
+            } catch (NoEntityWithSuchIdException | NumberFormatException |
+                    ArrayIndexOutOfBoundsException e) {
+                System.err.println(e.getLocalizedMessage());
+            }
+        } else {
+            System.out.println("Please use '/' for separation");
         }
     }
 
     public void returnBook() {
         System.out.println("Please enter book ID");
-        var input = scanner.nextLine();
-        var bookId = Long.parseLong(input);
+        var bookId = scanner.nextLong();
         try {
             returnBook(bookId);
         } catch (NoEntityWithSuchIdException | NumberFormatException e) {
-            System.err.println(e.getLocalizedMessage());;
+            System.err.println(e.getLocalizedMessage());
         }
     }
 
     public void showAllReaderBooks() {
         System.out.println("Please enter reader ID");
-        var input = scanner.nextLine();
-        var readerId = Long.parseLong(input);
+        var readerId = scanner.nextLong();
         try {
             var allBooksOfReader = getAllBooksByReader(readerId);
             if(allBooksOfReader.isEmpty()) {
@@ -81,8 +94,7 @@ public class LibraryService {
 
     public void showReaderOfBook() {
         System.out.println("Please enter book ID");
-        var input = scanner.nextLine();
-        var bookId = Long.parseLong(input);
+        var bookId = scanner.nextLong();
         try {
             showReaderOfBookWithId(bookId);
         } catch (NoEntityWithSuchIdException e) {
@@ -90,7 +102,7 @@ public class LibraryService {
         }
     }
 
-    private static void showReaderOfBookWithId(Long bookId) {
+    private void showReaderOfBookWithId(Long bookId) {
         if(!Storage.containsBookWithId(bookId)) {
             throw new NoEntityWithSuchIdException(
                     "Book with a specified id " + bookId + " does not exist in the storage");
@@ -104,7 +116,7 @@ public class LibraryService {
                 );
     }
 
-    private static List<Long> getAllBooksByReader(Long readerId) {
+    private List<Long> getAllBooksByReader(Long readerId) {
         if(!Storage.containsReaderWithId(readerId)) {
             throw new NoEntityWithSuchIdException(
                     "Reader with a specified id " + readerId + " does not exist in the storage");
@@ -112,7 +124,7 @@ public class LibraryService {
         return Storage.getBooksIdsByReaderId(readerId);
     }
 
-    private static void returnBook(Long bookId) {
+    private void returnBook(Long bookId) {
         if(!Storage.containsBookWithId(bookId)) {
             throw new NoEntityWithSuchIdException(
                     "Book with a specified id " + bookId + " does not exist in the storage");
@@ -123,7 +135,7 @@ public class LibraryService {
         );
     }
 
-    private static void bookLentToReader(Long bookId, Long readerId) {
+    private void bookLentToReader(Long bookId, Long readerId) {
         if(!Storage.containsReaderWithId(readerId)) {
             throw new NoEntityWithSuchIdException(
                     "Reader with a specified id " + readerId + " does not exist in the storage");

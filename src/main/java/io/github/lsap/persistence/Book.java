@@ -2,7 +2,7 @@ package io.github.lsap.persistence;
 
 public class Book {
 
-    private Long id;
+    private long id;
     private String title;
     private String author;
 
@@ -10,7 +10,7 @@ public class Book {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
