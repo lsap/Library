@@ -140,11 +140,10 @@ public class LibraryService {
             throw new NoEntityWithSuchIdException(
                     "Reader with a specified id " + readerId + " does not exist in the storage");
         }
-        if(!Storage.containsBookWithId(bookId)) {
+        else if(!Storage.containsBookWithId(bookId)) {
             throw new NoEntityWithSuchIdException(
                     "Book with a specified id " + bookId + " does not exist in the storage");
-        }
-        Storage.lendBookToReader(bookId, readerId);
+        } else Storage.lendBookToReader(bookId, readerId);
     }
 
 }
