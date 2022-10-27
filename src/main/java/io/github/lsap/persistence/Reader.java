@@ -2,14 +2,20 @@ package io.github.lsap.persistence;
 
 public class Reader {
 
-    private Long id;
+    private long id;
     private String name;
+
+    public Reader() {}
+
+    public Reader(String name) {
+        this.name = name;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

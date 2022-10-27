@@ -20,7 +20,35 @@ public class Storage {
     private static final List<Reader> readers = new ArrayList<>();
     private static final Map<Long, List<Long>> readerBooks = new HashMap<>();
 
-    public static List<Book> getAllBooks () {
+    static {
+        var book0 = new Book();
+        book0.setId(497L);
+        book0.setTitle("Anthem");
+        book0.setAuthor("Ayn Rand");
+        var book1 = new Book();
+        book1.setId(498L);
+        book1.setTitle("Atlas shrugged");
+        book1.setAuthor("Alisa Rosenbaum");
+        var book2 = new Book();
+        book2.setId(499L);
+        book2.setTitle("Spacepilot");
+        book2.setAuthor("Stanislav Lem");
+        books.addAll(List.of(book0, book1, book2));
+        var reader0 = new Reader();
+        reader0.setId(497L);
+        reader0.setName("John");
+        var reader1 = new Reader();
+        reader1.setId(498L);
+        reader1.setName("Jane");
+        var reader2 = new Reader();
+        reader2.setId(499L);
+        reader2.setName("Ijon");
+        readers.addAll(List.of(reader0, reader1, reader2));
+    }
+
+    private Storage() {}
+
+    public static List<Book> getAllBooks() {
         return books;
     }
 
@@ -28,15 +56,17 @@ public class Storage {
         return readers;
     }
 
-    public static void addReader(Reader reader) {
+    public static AtomicLong addReader(Reader reader) {
         reader.setId(readerId.incrementAndGet());
         readers.add(reader);
         readerBooks.put(reader.getId(), new ArrayList<>());
+        return readerId;
     }
 
-    public static void addBook(Book book) {
+    public static AtomicLong addBook(Book book) {
         book.setId(bookId.incrementAndGet());
         books.add(book);
+        return bookId;
     }
 
     public static void lendBookToReader(Long bookId, Long readerId) {
