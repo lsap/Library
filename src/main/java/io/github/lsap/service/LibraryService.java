@@ -22,9 +22,7 @@ public class LibraryService {
 
     public void addNewReader() {
         System.out.println("Please enter new reader's full name!");
-        var readerName = scanner.nextLine();
-        var reader = new Reader();
-        reader.setName(readerName);
+        var reader = new Reader(scanner.nextLine());
         var id = Storage.addReader(reader);
         System.out.println("Book with id " + id + " was added");
     }

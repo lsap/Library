@@ -5,6 +5,10 @@ public class Reader {
     private long id;
     private String name;
 
+    public Reader(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
