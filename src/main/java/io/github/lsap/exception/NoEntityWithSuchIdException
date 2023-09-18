@@ -1,0 +1,10 @@
+package io.github.lsap.exception;
+
+public class NoEntityWithSuchIdException {
+
+    private static final long serialVersionUID = Long.MIN_VALUE;
+
+    public NoEntityWithSuchIdException(String message) {
+        super(message);
+    }
+}
