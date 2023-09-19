@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS library;
+
+CREATE DATABASE library;
+\c library;
+CREATE USER lsap PASSWORD 'secret';
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS readers;
 
