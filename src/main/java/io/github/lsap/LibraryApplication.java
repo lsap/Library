@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-class LibraryApplication {
+public class LibraryApplication {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final LibraryService libraryService = new LibraryService();
@@ -65,3 +65,4 @@ class LibraryApplication {
     }
 
 }
+

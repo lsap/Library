@@ -11,8 +11,9 @@ public class ConnectionService {
         var login = "lsap";
         var password = "secret";
         try {
+            Class.forName("org.postgresql.Driver");
             return DriverManager.getConnection(uri, login, password);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getLocalizedMessage());
             return null;
         }

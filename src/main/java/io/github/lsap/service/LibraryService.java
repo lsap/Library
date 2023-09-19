@@ -5,13 +5,14 @@ import io.github.lsap.persistence.Book;
 import io.github.lsap.persistence.Reader;
 import io.github.lsap.repository.Storage;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Scanner;
 
 public class LibraryService {
 
     private final Scanner scanner = new Scanner(System.in);
-
+    private final Connection connection = new ConnectionService().getConnection();
     public void showAllBooks() {
         System.out.println(List.of(Storage.getAllBooks()));
     }
@@ -145,3 +146,4 @@ public class LibraryService {
     }
 
 }
+
