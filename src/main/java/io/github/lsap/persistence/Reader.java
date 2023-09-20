@@ -5,9 +5,8 @@ public class Reader {
     private long id;
     private String name;
 
-    public Reader() {}
-
-    public Reader(String name) {
+    public Reader(long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
