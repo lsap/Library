@@ -23,6 +23,7 @@ public class Ui {
             input = scanner.nextLine();
             switch (input) {
                 case "1"    -> showAllBooks();
+                case "2"    -> showAllReaders();
                 case "exit" -> { System.out.println("Bye!"); System.exit(0); }
                 default     -> {}
             }
@@ -38,6 +39,18 @@ public class Ui {
             });
         } catch (DaoLayerException e) {
             System.err.println("Can't get books due to persistence layer exception. "
+                + e.getLocalizedMessage());
+        }
+    }
+
+    private void showAllReaders() {
+        try {
+            libraryService.getAllReaders()
+            .forEach(reader -> {
+                System.out.println(reader);
+            });
+        } catch (DaoLayerException e) {
+            System.err.println("Can't get readers due to persistence layer exception. "
                 + e.getLocalizedMessage());
         }
     }
